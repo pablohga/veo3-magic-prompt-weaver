@@ -17,6 +17,7 @@ export interface PromptData {
   style: string;
   charactersCount: string;
   dialogLanguage: string;
+  characterSpeech: string;
 }
 
 interface PromptGeneratorProps {
@@ -34,10 +35,11 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
     sensory: "",
     style: "",
     charactersCount: "",
-    dialogLanguage: ""
+    dialogLanguage: "",
+    characterSpeech: ""
   });
 
-  const totalSteps = 9;
+  const totalSteps = 10;
   const progress = (currentStep / totalSteps) * 100;
 
   const stepTitles = [
@@ -49,7 +51,8 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
     "Elementos Sensoriais",
     "Estilo Visual",
     "Quantidade de personagens na cena",
-    "Linguagem do dialogo do video"
+    "Linguagem do dialogo do video",
+    "Texto do que o personagem irá falar"
   ];
 
   const handleNext = () => {
@@ -84,7 +87,8 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
             sensory: "",
             style: "",
             charactersCount: "",
-            dialogLanguage: ""
+            dialogLanguage: "",
+            characterSpeech: ""
           });
         }}
       />

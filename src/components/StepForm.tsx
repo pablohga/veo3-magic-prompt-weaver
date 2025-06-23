@@ -304,6 +304,34 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
         );
       }
 
+      case 10:
+        return (
+          <div className="space-y-4">
+            <Card className="bg-purple-50/10 border-purple-200/30">
+              <CardContent className="pt-4">
+                <CardDescription className="text-gray-300 mb-4 whitespace-pre-line">
+                  - Se for apenas 1 personagem, escreva o que ele deve falar{'\n\n'}
+                  - Se for mais de um personagem, escreva o que cada um deve falar:{'\n\n'}
+                  Miguel: Mas se invertermos o fluxo aqui, o sistema ganha 30% de eficiência!{'\n'}
+                  Clara: Ganha, mas a que custo de segurança? Você não considerou o ponto de falha
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <div className="space-y-2">
+              <Label htmlFor="characterSpeech" className="text-white">
+                Texto do que o personagem irá falar:
+              </Label>
+              <Textarea
+                id="characterSpeech"
+                placeholder="Escreva o texto do diálogo aqui..."
+                value={promptData.characterSpeech}
+                onChange={(e) => onUpdate('characterSpeech', e.target.value)}
+                className="bg-white/10 border-purple-200/30 text-white placeholder-gray-400 min-h-[120px]"
+              />
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
