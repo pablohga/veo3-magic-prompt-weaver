@@ -48,13 +48,15 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
               <CardContent className="pt-4">
                 <CardDescription className="text-gray-300 mb-4">
                   🧠 <strong>Dica:</strong> Pense em uma situação específica e humana. 
-                  Pode ser algo cotidiano como "acordar atrasado" ou emocional como "chorar de alívio".
+                  Pode ser algo cotidiano como "acordar atrasado" ou emocional como "chorar de alívio".{'\n'}
+                  Exemplo: Uma mulher jovem acordando atrasada, correndo pela casa procurando as chaves...
                 </CardDescription>
               </CardContent>
             </Card>
             <div className="space-y-2">
               <Label htmlFor="scene" className="text-white">
-                Descreva sua cena cotidiana ou emocional:
+                Descreva sua cena cotidiana ou emocional:<br />
+                Ex: Uma mulher jovem acordando atrasada, correndo pela casa procurando as chaves...
               </Label>
               <Textarea
                 id="scene"
@@ -74,7 +76,8 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
               <CardContent className="pt-4">
                 <CardDescription className="text-gray-300 mb-4">
                   📍 <strong>Importante:</strong> O ponto de vista define como o espectador vai vivenciar a cena. 
-                  Cada opção cria uma sensação diferente.
+                  Cada opção cria uma sensação diferente.{'\n'}
+                  Exemplo: Selecione um ponto de vista...
                 </CardDescription>
               </CardContent>
             </Card>
@@ -111,7 +114,8 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
             </Card>
             <div className="space-y-2">
               <Label htmlFor="environment" className="text-white">
-                Descreva o ambiente e cenário:
+                Descreva o ambiente e cenário:<br />
+                Ex: em uma cozinha moderna iluminada por luz natural da manhã...
               </Label>
               <Textarea
                 id="environment"
@@ -137,7 +141,8 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
             </Card>
             <div className="space-y-2">
               <Label htmlFor="movements" className="text-white">
-                Adicione movimentos humanos naturais:
+                Adicione movimentos humanos naturais:<br />
+                Ex: ela mexe no cabelo nervosamente enquanto olha o relógio...
               </Label>
               <Textarea
                 id="movements"
@@ -163,7 +168,8 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
             </Card>
             <div className="space-y-2">
               <Label htmlFor="emotion" className="text-white">
-                Descreva a expressão facial ou emoção:
+                Descreva a expressão facial ou emoção:<br />
+                Ex: com um sorriso cansado mas aliviado no rosto...
               </Label>
               <Textarea
                 id="emotion"
@@ -189,7 +195,8 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
             </Card>
             <div className="space-y-2">
               <Label htmlFor="sensory" className="text-white">
-                Adicione elementos sensoriais (som, toque):
+                Adicione elementos sensoriais (som, toque): <br />
+                Ex: som suave de chuva na janela e o tic-tac do relógio...
               </Label>
               <Textarea
                 id="sensory"
