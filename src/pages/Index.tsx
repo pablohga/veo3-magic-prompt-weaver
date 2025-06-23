@@ -3,15 +3,27 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play, Sparkles, Video, Wand2 } from "lucide-react";
+import { Play, Sparkles, Video, Wand2, User } from "lucide-react";
 import { PromptGenerator } from "@/components/PromptGenerator";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [showGenerator, setShowGenerator] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   if (showGenerator) {
     return <PromptGenerator onBack={() => setShowGenerator(false)} />;
   }
+
+  const handleStartCreation = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      setShowGenerator(true);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
@@ -25,12 +37,43 @@ const Index = () => {
             <span className="text-2xl font-bold text-white">VEO3 Magic Prompt</span>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="text-white hover:text-purple-200">
-              Login
-            </Button>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-              Cadastrar
-            </Button>
+            {user ? (
+              <>
+                <div className="flex items-center space-x-2 text-white">
+                  <User className="w-4 h-4" />
+                  <span className="hidden md:inline">{user.email}</span>
+                </div>
+                <Button 
+                  onClick={() => navigate("/dashboard")}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={signOut}
+                  className="text-white hover:text-purple-200"
+                >
+                  Sair
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate("/auth")}
+                  className="text-white hover:text-purple-200"
+                >
+                  Entrar
+                </Button>
+                <Button 
+                  onClick={() => navigate("/auth")}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                >
+                  Cadastrar
+                </Button>
+              </>
+            )}
           </div>
         </nav>
       </header>
@@ -57,11 +100,23 @@ const Index = () => {
           <Button 
             size="lg" 
             className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-lg px-8 py-4"
-            onClick={() => setShowGenerator(true)}
+            onClick={handleStartCreation}
           >
             <Play className="w-5 h-5 mr-2" />
             Começar Criação
           </Button>
+          {!user && (
+            <p className="text-gray-400 text-sm mt-4">
+              <Button 
+                variant="link" 
+                onClick={() => navigate("/auth")}
+                className="text-purple-300 hover:text-purple-200 p-0"
+              >
+                Crie uma conta
+              </Button>
+              {" "}para salvar seus prompts
+            </p>
+          )}
         </div>
 
         {/* Features Grid */}

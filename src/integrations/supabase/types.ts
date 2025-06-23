@@ -9,6 +9,87 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          role: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          role?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      prompts: {
+        Row: {
+          created_at: string
+          emotion: string
+          environment: string
+          final_prompt: string
+          id: string
+          is_favorite: boolean | null
+          movements: string
+          pov: string
+          scene: string
+          sensory: string
+          style: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emotion: string
+          environment: string
+          final_prompt: string
+          id?: string
+          is_favorite?: boolean | null
+          movements: string
+          pov: string
+          scene: string
+          sensory: string
+          style: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emotion?: string
+          environment?: string
+          final_prompt?: string
+          id?: string
+          is_favorite?: boolean | null
+          movements?: string
+          pov?: string
+          scene?: string
+          sensory?: string
+          style?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string
