@@ -73,7 +73,17 @@ export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreview
       getStyleText(promptData.style)
     ].filter(part => part.trim() !== "");
 
-    return parts.join(", ");
+    let prompt = parts.join(", ");
+
+    if (promptData.charactersCount.trim() !== "") {
+      prompt += `, ${promptData.charactersCount} personagem${promptData.charactersCount === "1" ? "" : "s"} na cena`;
+    }
+
+    if (promptData.dialogLanguage.trim() !== "") {
+      prompt += `\n\nCharacter speaks naturally in Brazilian Portuguese, amused and confident.\n\n“${promptData.dialogLanguage}”`;
+    }
+
+    return prompt;
   };
 
   const finalPrompt = generateFinalPrompt();

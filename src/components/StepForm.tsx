@@ -233,6 +233,77 @@ export const StepForm = ({ step, promptData, onUpdate }: StepFormProps) => {
           </div>
         );
 
+      case 8:
+        return (
+          <div className="space-y-4">
+            <Card className="bg-purple-50/10 border-purple-200/30">
+              <CardContent className="pt-4">
+                <CardDescription className="text-gray-300 mb-4">
+                  🎭 <strong>Quantidade de personagens na cena:</strong> Informe o número de personagens presentes na cena.
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <div className="space-y-2">
+              <Label htmlFor="charactersCount" className="text-white">
+                Quantidade de personagens:
+              </Label>
+              <Input
+                id="charactersCount"
+                type="number"
+                min={1}
+                placeholder="Ex: 3"
+                value={promptData.charactersCount}
+                onChange={(e) => onUpdate('charactersCount', e.target.value)}
+                className="bg-white/10 border-purple-200/30 text-white placeholder-gray-400"
+              />
+            </div>
+          </div>
+        );
+
+      case 9: {
+        const languageOptions = [
+          { value: "brasilian-portuguese", label: "Portuguese Brasil" },
+          { value: "english", label: "English" },
+          { value: "mandarin", label: "Mandarin Chinese" },
+          { value: "spanish", label: "Spanish" },
+          { value: "hindi", label: "Hindi" },
+          { value: "arabic", label: "Arabic" },
+          { value: "portuguese", label: "Portuguese" },
+          { value: "bengali", label: "Bengali" },
+          { value: "russian", label: "Russian" },
+          { value: "japanese", label: "Japanese" },
+          { value: "punjabi", label: "Punjabi" }
+        ];
+        return (
+          <div className="space-y-4">
+            <Card className="bg-purple-50/10 border-purple-200/30">
+              <CardContent className="pt-4">
+                <CardDescription className="text-gray-300 mb-4">
+                  🗣️ <strong>Linguagem do diálogo do vídeo:</strong> Selecione a linguagem do diálogo.
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <div className="space-y-2">
+              <Label htmlFor="dialogLanguage" className="text-white">
+                Linguagem do diálogo:
+              </Label>
+              <Select value={promptData.dialogLanguage} onValueChange={(value) => onUpdate('dialogLanguage', value)}>
+                <SelectTrigger className="bg-white/10 border-purple-200/30 text-white">
+                  <SelectValue placeholder="Selecione uma linguagem..." />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-900 border-purple-200/30">
+                  {languageOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value} className="text-white">
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        );
+      }
+
       default:
         return null;
     }
