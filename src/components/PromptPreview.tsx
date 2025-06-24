@@ -83,7 +83,7 @@ export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreview
 
     if (promptData.dialogLanguage.trim() !== "") {
       // Replace phrase with "Character speaks"
-      prompt += `\n\nCharacter speaks\n\n${promptData.dialogLanguage}`;
+      prompt += `\n\nCharacter speaks\n\n${promptData.dialogLanguage}: `;
     }
 
     if (promptData.characterSpeech.trim() !== "") {
