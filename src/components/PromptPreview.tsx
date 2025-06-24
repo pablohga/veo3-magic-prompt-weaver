@@ -18,6 +18,7 @@ import {
   Linkedin
 } from "lucide-react";
 import { PromptData } from "./PromptGenerator";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PromptPreviewProps {
   promptData: PromptData;
@@ -27,6 +28,7 @@ interface PromptPreviewProps {
 
 export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreviewProps) => {
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   // Mapear valores selecionados para textos legíveis
   const getPovText = (pov: string) => {
@@ -110,6 +112,98 @@ export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreview
       });
     }
   };
+
+  /* const savePromptToLibrary = async () => {
+    setSaving(true);
+    try {
+      const { error } = await supabase.from('prompts').insert({
+        scene: promptData.scene,
+        pov: promptData.pov,
+        environment: promptData.environment,
+        movements: promptData.movements,
+        emotion: promptData.emotion,
+        sensory: promptData.sensory,
+        style: promptData.style,
+        title: promptData.scene.substring(0, 50), // Assuming title is first 50 chars of scene
+        final_prompt: finalPrompt,
+        created_at: new Date().toISOString()
+      });
+      if (error) {
+        toast({
+          title: "Erro ao salvar",
+          description: `Não foi possível salvar o prompt: ${error.message}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Prompt salvo!",
+          description: "Seu prompt foi salvo na biblioteca com sucesso.",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Erro ao salvar",
+        description: "Ocorreu um erro inesperado ao salvar o prompt.",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  }; */
+  const savePromptToLibrary = async () => {
+  setSaving(true);
+  try {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      toast({
+        title: "Usuário não autenticado",
+        description: "Você precisa estar logado para salvar prompts.",
+        variant: "destructive",
+      });
+      setSaving(false);
+      return;
+    }
+
+    const { error } = await supabase.from("prompts").insert({
+      scene: promptData.scene,
+      pov: promptData.pov,
+      environment: promptData.environment,
+      movements: promptData.movements,
+      emotion: promptData.emotion,
+      sensory: promptData.sensory,
+      style: promptData.style,
+      title: promptData.scene.substring(0, 50),
+      final_prompt: finalPrompt,
+      created_at: new Date().toISOString(),
+      user_id: user.id, // Adicionando o campo obrigatório
+    });
+
+    if (error) {
+      toast({
+        title: "Erro ao salvar",
+        description: `Não foi possível salvar o prompt: ${error.message}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Prompt salvo!",
+        description: "Seu prompt foi salvo na biblioteca com sucesso.",
+      });
+    }
+  } catch (err) {
+    toast({
+      title: "Erro ao salvar",
+      description: "Ocorreu um erro inesperado ao salvar o prompt.",
+      variant: "destructive",
+    });
+  } finally {
+    setSaving(false);
+  }
+};
 
   const shareOnSocial = (platform: string) => {
     const text = `Acabei de criar um prompt incrível no VEO3 Magic Prompt! 🎬✨`;
@@ -232,12 +326,13 @@ Ferramenta: VEO3 Magic Prompt Weaver
                 </Button>
                 
                 <Button 
-                  onClick={() => {/* TODO: Implementar salvamento após integração Supabase */}}
+                  onClick={savePromptToLibrary}
+                  disabled={saving}
                   variant="outline"
                   className="border-purple-200/50 text-white hover:bg-purple-500/20"
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Salvar na Biblioteca
+                  {saving ? "Salvando..." : "Salvar na Biblioteca"}
                 </Button>
               </div>
             </CardContent>
@@ -324,7 +419,9 @@ Ferramenta: VEO3 Magic Prompt Weaver
               Criar Novo Prompt
             </Button>
             <Button 
-              onClick={() => {/* TODO: Navegar para biblioteca após integração Supabase */}}
+              onClick={() => {
+                window.location.href = "/dashboard";
+              }}
               size="lg"
               className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
             >
