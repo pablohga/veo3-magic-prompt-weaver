@@ -278,11 +278,11 @@ Ferramenta: VEO3 Magic Prompt Weaver
           <Card className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-200/30">
             <CardContent className="pt-6">
               <div className="flex items-center justify-center space-x-2 text-center">
-                <Sparkles className="w-6 h-6 text-green-400" />
-                <span className="text-xl text-white font-semibold">
+                <Sparkles className="w-6 h-6 text-green-600" />
+                <span className="text-xl text-purple-500 font-semibold">
                   Seu prompt cinematográfico está pronto para o VEO3!
                 </span>
-                <Sparkles className="w-6 h-6 text-green-400" />
+                <Sparkles className="w-6 h-6 text-green-600" />
               </div>
             </CardContent>
           </Card>
@@ -319,7 +319,7 @@ Ferramenta: VEO3 Magic Prompt Weaver
                 <Button 
                   onClick={downloadPrompt}
                   variant="outline"
-                  className="border-black text-white hover:bg-gray-800"
+                  className="border-black text-black hover:bg-purple-500/20"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Baixar TXT
@@ -329,7 +329,7 @@ Ferramenta: VEO3 Magic Prompt Weaver
                   onClick={savePromptToLibrary}
                   disabled={saving}
                   variant="outline"
-                  className="border-black text-white hover:bg-gray-800"
+                  className="border-black text-black hover:bg-purple-500/20"
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
                   {saving ? "Salvando..." : "Salvar na Biblioteca"}
@@ -413,14 +413,19 @@ Ferramenta: VEO3 Magic Prompt Weaver
               onClick={onStartOver}
               variant="outline"
               size="lg"
-              className="border-purple-200/50 text-white hover:bg-purple-500/20"
+              className="border-purple-200/50 text-black hover:bg-purple-500/20"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Criar Novo Prompt
             </Button>
             <Button 
-              onClick={() => {
-                window.location.href = "/dashboard";
+              onClick={async () => {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                if (error || !user) {
+                  window.location.href = "/auth";
+                } else {
+                  window.location.href = "/dashboard";
+                }
               }}
               size="lg"
               className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
