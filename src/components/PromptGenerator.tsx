@@ -158,7 +158,7 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
                   variant="outline"
                   onClick={handlePrevious}
                   disabled={currentStep === 1}
-                  className="border-purple-200/50 text-white hover:bg-purple-500/20"
+                  className="bg-purple-500/20 border-purple-200/50 text-white hover:bg-purple-500/20"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Anterior

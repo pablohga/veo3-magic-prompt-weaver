@@ -355,7 +355,7 @@ Criado em: ${new Date(prompt.created_at).toLocaleDateString('pt-BR')}
                         variant="outline"
                         size="sm"
                         onClick={() => sharePrompt(prompt)}
-                        className="border-purple-200/50 text-white hover:bg-purple-500/20"
+                        className="bg-purple-500/20 border-purple-200/50 text-white hover:bg-purple-500/20"
                       >
                         <Share2 className="w-4 h-4" />
                       </Button>
@@ -363,7 +363,7 @@ Criado em: ${new Date(prompt.created_at).toLocaleDateString('pt-BR')}
                         variant="outline"
                         size="sm"
                         onClick={() => exportToPDF(prompt)}
-                        className="border-purple-200/50 text-white hover:bg-purple-500/20"
+                        className="bg-purple-500/20 border-purple-200/50 text-white hover:bg-purple-500/20"
                       >
                         <Download className="w-4 h-4" />
                       </Button>

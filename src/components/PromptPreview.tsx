@@ -319,7 +319,7 @@ Ferramenta: VEO3 Magic Prompt Weaver
                 <Button 
                   onClick={downloadPrompt}
                   variant="outline"
-                  className="border-purple-200/50 text-white hover:bg-purple-500/20"
+                  className="border-black text-white hover:bg-gray-800"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Baixar TXT
@@ -329,7 +329,7 @@ Ferramenta: VEO3 Magic Prompt Weaver
                   onClick={savePromptToLibrary}
                   disabled={saving}
                   variant="outline"
-                  className="border-purple-200/50 text-white hover:bg-purple-500/20"
+                  className="border-black text-white hover:bg-gray-800"
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
                   {saving ? "Salvando..." : "Salvar na Biblioteca"}
