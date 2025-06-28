@@ -95,7 +95,7 @@ const Index = () => {
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
             Transforme suas ideias em prompts profissionais para o VEO3. 
-            Guiamos você através de 7 etapas essenciais para criar vídeos únicos e envolventes.
+            Guiamos você através de 10 etapas essenciais para criar vídeos únicos e envolventes.
           </p>
           <Button 
             size="lg" 
@@ -125,7 +125,7 @@ const Index = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <Wand2 className="w-5 h-5 mr-2 text-purple-400" />
-                7 Etapas Guiadas
+                10 Etapas Guiadas
               </CardTitle>
             </CardHeader>
             <CardContent>
