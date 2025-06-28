@@ -382,7 +382,7 @@ Ferramenta: VEO3 Magic Prompt Weaver
           {/* Summary of Steps */}
           <Card className="bg-white/10 backdrop-blur-sm border-purple-200/20">
             <CardHeader>
-              <CardTitle className="text-xl text-white">Resumo das Etapas</CardTitle>
+              <CardTitle className="text-xl text-white">Resumo das Etapas.</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {[
