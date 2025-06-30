@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Video, Mail, Lock, User, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { Helmet } from 'react-helmet-async';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -79,6 +80,11 @@ const Auth = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Login / Cadastro - VEO3 Magic Prompt</title>
+      <meta name="description" content="Acesse sua conta ou crie uma nova para salvar e gerenciar seus prompts de vídeo para o VEO3." />
+    </Helmet>
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center mb-8">
@@ -218,6 +224,8 @@ const Auth = () => {
         </Card>
       </div>
     </div>
+    </>
+    
   );
 };
 

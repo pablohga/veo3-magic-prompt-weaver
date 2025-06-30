@@ -7,6 +7,7 @@ import { Play, Sparkles, Video, Wand2, User } from "lucide-react";
 import { PromptGenerator } from "@/components/PromptGenerator";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
   const [showGenerator, setShowGenerator] = useState(false);
@@ -26,7 +27,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <>
+    <Helmet>
+        <title>VEO3 Magic Prompt - Gerador de Prompts de IA para Vídeo</title>
+        <meta name="description" content="Transforme suas ideias em prompts cinematográficos profissionais para o VEO3 com nosso assistente de 10 etapas. Crie vídeos únicos e envolventes." />
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
@@ -193,6 +199,8 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </>
+    
   );
 };
 
