@@ -256,6 +256,15 @@ Criado em: ${new Date(prompt.created_at).toLocaleDateString('pt-BR')}
               <User className="w-4 h-4" />
               <span className="hidden md:inline">{user?.email}</span>
             </div>
+            {user?.email === "pablohga@gmail.com" && (
+              <Button
+                variant="ghost"
+                onClick={() => navigate("/admin")}
+                className="text-white hover:text-purple-200"
+              >
+                Admin
+              </Button>
+            )}
             <Button 
               variant="ghost" 
               onClick={handleSignOut}

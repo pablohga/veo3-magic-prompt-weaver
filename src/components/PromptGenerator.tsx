@@ -109,7 +109,7 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                 <Video className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">VEO3 Magic Prompt</span>
+              <img src="/images/logo_veo3magic.png" alt="VEO3 Magic Prompt Logo" className="h-8 w-auto" />
             </div>
           </div>
           <div className="text-white text-sm">

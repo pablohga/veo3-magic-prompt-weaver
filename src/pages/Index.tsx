@@ -49,6 +49,15 @@ const Index = () => {
                   <User className="w-4 h-4" />
                   <span className="hidden md:inline">{user.email}</span>
                 </div>
+                {user.email === "pablohga@gmail.com" && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => navigate("/admin")}
+                    className="text-white hover:text-purple-200"
+                  >
+                    Admin
+                  </Button>
+                )}
                 <Button 
                   onClick={() => navigate("/dashboard")}
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
