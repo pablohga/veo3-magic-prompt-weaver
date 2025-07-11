@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { PromptData } from "./PromptGenerator";
 import { supabase } from "@/integrations/supabase/client";
+import { translatePromptWithGemini } from "@/components/translatePrompt";
 
 interface PromptPreviewProps {
   promptData: PromptData;
@@ -29,6 +30,7 @@ interface PromptPreviewProps {
 export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreviewProps) => {
   const [copied, setCopied] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [translatedPrompt, setTranslatedPrompt] = useState("");
 
   // Mapear valores selecionados para textos legíveis
   const getPovText = (pov: string) => {
@@ -94,6 +96,15 @@ export const PromptPreview = ({ promptData, onBack, onStartOver }: PromptPreview
   };
 
   const finalPrompt = generateFinalPrompt();
+
+  useEffect(() => {
+    const translate = async () => {
+      const translated = await translatePromptWithGemini(finalPrompt);
+      setTranslatedPrompt(translated);
+    };
+
+    translate();
+  }, [finalPrompt]);
 
   const copyToClipboard = async () => {
     try {
@@ -237,9 +248,7 @@ ${finalPrompt}
 Criado em: ${new Date().toLocaleDateString('pt-BR')}
 Ferramenta: VEO3 Magic Prompt Weaver
 ATENÇÃO: Para melhor performance do seu Prompt no VEO3, 
-recomendamos realizar a traduçao para Inglês. 
-Porém, mantenha o texto referente aos diaogos e falas dos personagem na linguagem desejada.
-Ferramenta para tradução: https://www.deepl.com/translator. 
+recomendamos utilizar a versão do prompt em Inglês. 
 
 Ainda informamos para que revise o prompt antes de usar no VEO3. 
 Ajustes podem ser necessários para melhor performance.
@@ -306,6 +315,12 @@ Ajustes podem ser necessários para melhor performance.
               <div className="bg-gray-900/50 rounded-lg p-6 border border-purple-200/30">
                 <p className="text-white text-lg leading-relaxed font-mono">
                   {finalPrompt}
+                  
+                </p>
+                <br /><br />
+                <p className="text-white text-lg leading-relaxed font-mono">
+                  ++++++ VERÃO EM INGLÊS ++++++ <br /><br />
+                  {translatedPrompt}
                 </p>
                 
               </div>
@@ -314,11 +329,7 @@ Ajustes podem ser necessários para melhor performance.
               <div className="attention-text">
                   <p className="text-white text-lg leading-relaxed font-mono">
                     <b>ATENÇÃO:</b> Para melhor performance do seu Prompt no VEO3, 
-                    recomendamos realizar a traduçao para Inglês. 
-                    Porém, mantenha o texto referente aos diálogos e falas dos personagem na 
-                    linguagem desejada.<br/>
-                   <b>Ferramenta para tradução: </b><a href="https://www.deepl.com/translator">https://www.deepl.com/translator</a> . <br /><br />
-
+                    recomendamos utilizar a versão do prompt em Inglês. <br />
                     Ainda informamos para que revise o prompt antes de usar no VEO3. 
                     Ajustes podem ser necessários para melhor performance.
                   </p>
