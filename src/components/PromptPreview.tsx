@@ -236,6 +236,13 @@ ${finalPrompt}
 ---
 Criado em: ${new Date().toLocaleDateString('pt-BR')}
 Ferramenta: VEO3 Magic Prompt Weaver
+ATENÇÃO: Para melhor performance do seu Prompt no VEO3, 
+recomendamos realizar a traduçao para Inglês. 
+Porém, mantenha o texto referente aos diaogos e falas dos personagem na linguagem desejada.
+Ferramenta para tradução: https://www.deepl.com/translator. 
+
+Ainda informamos para que revise o prompt antes de usar no VEO3. 
+Ajustes podem ser necessários para melhor performance.
 `;
 
     const blob = new Blob([content], { type: 'text/plain' });
@@ -300,10 +307,24 @@ Ferramenta: VEO3 Magic Prompt Weaver
                 <p className="text-white text-lg leading-relaxed font-mono">
                   {finalPrompt}
                 </p>
+                
               </div>
 
               {/* Action Buttons */}
+              <div className="attention-text">
+                  <p className="text-white text-lg leading-relaxed font-mono">
+                    <b>ATENÇÃO:</b> Para melhor performance do seu Prompt no VEO3, 
+                    recomendamos realizar a traduçao para Inglês. 
+                    Porém, mantenha o texto referente aos diálogos e falas dos personagem na 
+                    linguagem desejada.<br/>
+                   <b>Ferramenta para tradução: </b><a href="https://www.deepl.com/translator">https://www.deepl.com/translator</a> . <br /><br />
+
+                    Ainda informamos para que revise o prompt antes de usar no VEO3. 
+                    Ajustes podem ser necessários para melhor performance.
+                  </p>
+                </div>
               <div className="grid md:grid-cols-3 gap-4">
+                
                 <Button 
                   onClick={copyToClipboard}
                   className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
