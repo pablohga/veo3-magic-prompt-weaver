@@ -106,10 +106,13 @@ export const PromptGenerator = ({ onBack }: PromptGeneratorProps) => {
               Voltar
             </Button>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Video className="w-4 h-4 text-white" />
-              </div>
-              <img src="/images/logo_veo3magic.png" alt="VEO3 Magic Prompt Logo" className="h-8 w-auto" />
+              {/* <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <Video className="w-6 h-6 text-white" />
+              
+            </div> */}
+            <img src="/images/logo_veo3magic.png" alt="VEO3 Magic Prompt Logo" style={{ height: "4.75rem" }} className="" />
+            {/* <span className="text-2xl font-bold text-white">VEO3 Magic Prompt</span> */}
+          
             </div>
           </div>
           <div className="text-white text-sm">

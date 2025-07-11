@@ -19,10 +19,13 @@ const About = () => {
         <header className="container mx-auto px-4 py-6">
           <nav className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Video className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold text-white">VEO3 Magic Prompt</span>
+              {/* <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <Video className="w-6 h-6 text-white" />
+              
+            </div> */}
+            <img src="/images/logo_veo3magic.png" alt="VEO3 Magic Prompt Logo" style={{ height: "4.75rem" }} className="" />
+            {/* <span className="text-2xl font-bold text-white">VEO3 Magic Prompt</span> */}
+          
             </div>
             <div className="flex items-center space-x-4">
               {user ? (
