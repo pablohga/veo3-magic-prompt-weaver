@@ -2,7 +2,8 @@ import { createClient } from '@supabase/supabase-js'
 
 // Cabeçalhos de CORS
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*', // Para desenvolvimento. Em produção, considere restringir para seu domínio: 'https://veo3.pt'
+  // 'Access-Control-Allow-Origin': '*',  Para desenvolvimento. Em produção, considere restringir para seu domínio: 'https://veo3.pt'
+  'Access-Control-Allow-Origin': 'https://veo3.pt', // Para desenvolvimento. Em produção, considere restringir para seu domínio: 'https://veo3.pt'
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
