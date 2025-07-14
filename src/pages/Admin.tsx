@@ -15,18 +15,42 @@ interface User {
 }
 
 const Admin = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth(); // signOut não é usado aqui, pode remover se não for usar em outro lugar
   const navigate = useNavigate();
 
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // For add/edit user dialog
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+
+  // Função para buscar usuários através da Edge Function
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      // ✅ Chamada segura para a Edge Function
+      const { data, error } = await supabase.functions.invoke('list-users');
+      
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setUsers(data.users ?? []);
+    } catch (error: unknown) {
+      console.error("Error fetching users:", error);
+      toast({
+        title: "Erro",
+        description: `Falha ao carregar usuários: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -39,38 +63,11 @@ const Admin = () => {
         description: "Você não tem permissão para acessar a área administrativa.",
         variant: "destructive",
       });
-      // Instead of navigate to "/", redirect to dashboard to avoid redirect loop
       navigate("/dashboard");
       return;
     }
     fetchUsers();
   }, [user, navigate]);
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/users");
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
-      const data = await response.json();
-      // Map id to string if needed
-      const usersWithStringId = data.map((user: { id: string | number; email: string }) => ({
-        id: String(user.id),
-        email: user.email,
-      }));
-      setUsers(usersWithStringId ?? []);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      toast({
-        title: "Erro",
-        description: "Falha ao carregar usuários.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const openAddUserDialog = () => {
     setEditingUser(null);
@@ -89,18 +86,22 @@ const Admin = () => {
   const handleDeleteUser = async (userId: string) => {
     if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
     try {
-      const { error } = await supabase.from("users").delete().eq("id", parseInt(userId));
-      if (error) throw error;
-      setUsers(users.filter(u => u.id !== userId));
-      toast({
-        title: "Sucesso",
-        description: "Usuário excluído com sucesso.",
+      // ✅ Chamada segura para a Edge Function
+      const { error } = await supabase.functions.invoke('delete-user', {
+        body: { userId },
       });
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Falha ao excluir usuário.",
-        variant: "destructive",
+
+      if (error) throw error;
+      
+      toast({ title: "Sucesso", description: "Usuário excluído com sucesso." });
+      fetchUsers(); // Recarrega a lista para refletir a exclusão
+    } catch (error: unknown) {
+      toast({ 
+        title: "Erro", 
+        description: `Falha ao excluir usuário: ${
+          error instanceof Error ? error.message : String(error)
+        }`, 
+        variant: "destructive" 
       });
     }
   };
@@ -116,35 +117,29 @@ const Admin = () => {
     }
     try {
       if (editingUser) {
-        const { error } = await supabase.from("profiles").update({ email: emailInput }).eq("id", editingUser.id);
-        if (error) throw error;
-        setUsers(users.map(u => u.id === editingUser.id ? { ...u, email: emailInput } : u));
-        toast({
-          title: "Sucesso",
-          description: "Usuário atualizado com sucesso.",
+        // ✅ Chamada segura para a Edge Function para ATUALIZAR
+        const { error } = await supabase.functions.invoke('update-user', {
+          body: { userId: editingUser.id, email: emailInput, password: passwordInput || undefined },
         });
+        if (error) throw error;
+        toast({ title: "Sucesso", description: "Usuário atualizado com sucesso." });
       } else {
-        const { data, error } = await supabase.auth.admin.createUser({
-          email: emailInput,
-          password: passwordInput || undefined,
+        // ✅ Chamada segura para a Edge Function para CRIAR
+        const { error } = await supabase.functions.invoke('create-user', {
+          body: { email: emailInput, password: passwordInput },
         });
         if (error) throw error;
-        // data.user contains the user object
-        const newUser = data?.user ? { id: data.user.id, email: data.user.email ?? "" } : null;
-        if (newUser) {
-          setUsers([...users, newUser]);
-        }
-        toast({
-          title: "Sucesso",
-          description: "Usuário adicionado com sucesso.",
-        });
+        toast({ title: "Sucesso", description: "Usuário criado com sucesso." });
       }
       setDialogOpen(false);
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Falha ao salvar usuário.",
-        variant: "destructive",
+      fetchUsers(); // Recarrega a lista para refletir as mudanças
+    } catch (error: unknown) {
+      toast({ 
+        title: "Erro", 
+        description: `Falha ao salvar usuário: ${
+          error instanceof Error ? error.message : String(error)
+        }`, 
+        variant: "destructive" 
       });
     }
   };

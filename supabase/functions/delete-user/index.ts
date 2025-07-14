@@ -1,0 +1,26 @@
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseAdmin = createClient(
+  process.env.SUPABASE_URL ?? '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+)
+
+Deno.serve(async (req) => {
+  // Validação de segurança
+  const { data: { user: callingUser } } = await supabaseAdmin.auth.getUser(
+    req.headers.get('Authorization')?.replace('Bearer ', '')
+  );
+  if (!callingUser) {
+    return new Response(JSON.stringify({ error: 'Not authorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+  }
+
+  const { userId } = await req.json();
+
+  const { data, error } = await supabaseAdmin.auth.admin.deleteUser(userId);
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+  }
+
+  return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
+});

@@ -1,1 +1,18 @@
+# config.toml
 project_id = "utypfdcnprkhjvcyoqdc"
+
+[functions.list-users]
+  verify_jwt = true
+  import_map = "./import_map.json" # Corrigido: aponta para o arquivo na pasta supabase
+
+[functions.create-user]
+  verify_jwt = true
+  import_map = "./import_map.json" # Corrigido
+
+[functions.delete-user]
+  verify_jwt = true
+  import_map = "./import_map.json" # Corrigido
+
+[functions.update-user]
+  verify_jwt = true
+  import_map = "./import_map.json" # Corrigido
